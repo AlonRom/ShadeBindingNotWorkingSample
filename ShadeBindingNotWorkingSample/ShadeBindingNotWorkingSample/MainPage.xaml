@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ShadeBindingNotWorkingSample.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:graphics="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:local="clr-namespace:ShadeBindingNotWorkingSample"
+    xmlns:shades="clr-namespace:Sharpnado.Shades;assembly=Sharpnado.Shadows"
+    xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
+    <ContentPage.BindingContext>
+        <local:ViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!--  SelectedLedColorItemTemplate  -->
+            <DataTemplate x:Key="SelectedLedColorItemTemplate">
+                <shades:Shadows
+                    Margin="0,2,0,0"
+                    BackgroundColor="White"
+                    CornerRadius="40"
+                    HorizontalOptions="Center">
+                    <shades:Shadows.Shades>
+                        <shades:ImmutableShades>
+                            <shades:Shade
+                                BlurRadius="10"
+                                Opacity="0.3"
+                                Offset="5,5"
+                                Color="{Binding Color}" />
+                            <shades:Shade
+                                BlurRadius="10"
+                                Opacity="0.3"
+                                Offset="-5,-5"
+                                Color="{Binding Color}" />
+                            <shades:Shade
+                                BlurRadius="10"
+                                Opacity="0.3"
+                                Offset="-5,5"
+                                Color="{Binding Color}" />
+                            <shades:Shade
+                                BlurRadius="10"
+                                Opacity="0.3"
+                                Offset="5,-5"
+                                Color="{Binding Color}" />
+                        </shades:ImmutableShades>
+                    </shades:Shadows.Shades>
+                    <border:SfBorder
+                        BorderColor="#4A6170"
+                        BorderWidth="3"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        ShadowColor="#c5c5c5"
+                        VerticalOptions="Center"
+                        WidthRequest="50">
+
+                        <graphics:SfGradientView BackgroundBrush="{Binding BackgroundGradient}" />
+                    </border:SfBorder>
+                </shades:Shadows>
+            </DataTemplate>
+
+            <!--  LedColorItemTemplate  -->
+            <DataTemplate x:Key="LedColorItemTemplate">
+                <ContentView>
+                    <border:SfBorder
+                        BorderColor="#F1F1F2"
+                        BorderWidth="2"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="50">
+                        <graphics:SfGradientView BackgroundBrush="{Binding BackgroundGradient}" />
+                    </border:SfBorder>
+                </ContentView>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <syncfusion:SfListView
+        HorizontalOptions="CenterAndExpand"
+        IsScrollBarVisible="False"
+        ItemSize="75"
+        ItemTemplate="{StaticResource LedColorItemTemplate}"
+        ItemsSource="{Binding LedsColorList}"
+        SelectedItem="{Binding SelectedLed}"
+        SelectedItemTemplate="{StaticResource SelectedLedColorItemTemplate}"
+        SelectionMode="Single"
+        VerticalOptions="StartAndExpand">
+        <syncfusion:SfListView.LayoutManager>
+            <syncfusion:GridLayout SpanCount="4" />
+        </syncfusion:SfListView.LayoutManager>
+    </syncfusion:SfListView>
+</ContentPage>
